@@ -122,40 +122,30 @@ Todos os dados de negócio pertencem a um Tenant, permitindo o isolamento lógic
 ---
 
 <details>
-<summary>⬜ Etapa 4 - PostgreSQL</summary>
+<summary>⬜ Etapa 4 - Persistência com PostgreSQL e JPA</summary>
 
 ### Objetivos
 
 - Configurar PostgreSQL
 - Configurar DataSource
 - Configurar Profiles
-- Integração da aplicação com banco
+- Integrar aplicação com banco de dados
+- Criar entidade Tenant
+- Criar Repository
+- Implementar persistência de Tenant
+- Substituir armazenamento em memória por persistência real
 
 ### Conceitos
 
 - JDBC
 - Connection Pool
 - Configuração por ambiente
-
-</details>
-
----
-
-<details>
-<summary>⬜ Etapa 5 - JPA e Hibernate</summary>
-
-### Objetivos
-
-- Entity
-- Repository
-- JpaRepository
-- Persistência de Tenant
-
-### Conceitos
-
 - ORM
 - JPA
 - Hibernate
+- Entity
+- Repository
+- JpaRepository
 - Ciclo de vida das entidades
 
 </details>
@@ -163,7 +153,7 @@ Todos os dados de negócio pertencem a um Tenant, permitindo o isolamento lógic
 ---
 
 <details>
-<summary>⬜ Etapa 6 - Relacionamentos</summary>
+<summary>⬜ Etapa 5 - Relacionamentos</summary>
 
 ### Objetivos
 
@@ -184,7 +174,7 @@ Todos os dados de negócio pertencem a um Tenant, permitindo o isolamento lógic
 ---
 
 <details>
-<summary>⬜ Etapa 7 - Tratamento de Erros</summary>
+<summary>⬜ Etapa 6 - Tratamento de Erros</summary>
 
 ### Objetivos
 
@@ -202,7 +192,7 @@ Todos os dados de negócio pertencem a um Tenant, permitindo o isolamento lógic
 ---
 
 <details>
-<summary>⬜ Etapa 8 - Testes</summary>
+<summary>⬜ Etapa 7 - Testes</summary>
 
 ### Objetivos
 
@@ -222,7 +212,7 @@ Todos os dados de negócio pertencem a um Tenant, permitindo o isolamento lógic
 ---
 
 <details>
-<summary>⬜ Etapa 9 - Infraestrutura</summary>
+<summary>⬜ Etapa 8 - Infraestrutura</summary>
 
 ### Objetivos
 
@@ -236,7 +226,7 @@ Todos os dados de negócio pertencem a um Tenant, permitindo o isolamento lógic
 ---
 
 <details>
-<summary>⬜ Etapa 10 - Arquitetura e Produção</summary>
+<summary>⬜ Etapa 9 - Arquitetura e Produção</summary>
 
 ### Objetivos
 
