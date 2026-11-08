@@ -33,23 +33,30 @@ Todos os dados de negócio pertencem a um Tenant, permitindo o isolamento lógic
 <details>
 <summary>✅ Etapa 1 - Estrutura Inicial do Projeto</summary>
 
-### Concluído
+### Objetivos
 
-- Projeto Spring Boot criado
-- Configuração Maven
-- Java 21
-- Integração com Git
-- Integração com GitHub
-- Health Check endpoint
-- application.yml
-- application-local.example.yml
-- Configuração de profiles
-- Desativação temporária do DataSource para desenvolvimento sem banco
+- Criar projeto Spring Boot
+- Configurar Maven
+- Configurar Java 21
+- Configurar Git
+- Configurar GitHub
+- Implementar endpoint de Health Check
+- Configurar application.yml
+- Configurar application-local.example.yml
+- Configurar profiles de ambiente
+- Permitir inicialização da aplicação sem banco de dados
 
-### Objetivo
+### Conceitos
 
-Permitir a inicialização da aplicação e criação da estrutura base do projeto antes da configuração da persistência.
-
+- Spring Boot Bootstrap
+- Maven
+- Profiles
+- YAML
+- Versionamento com Git
+- Publicação no GitHub
+- Auto Configuration
+- DataSource Auto Configuration
+- 
 </details>
 
 ---
