@@ -1,8 +1,10 @@
 package br.com.fastdevelopment.auxy.controller;
 
-import br.com.fastdevelopment.auxy.dto.TenantRequest;
+import br.com.fastdevelopment.auxy.dto.TenantCreateRequest;
 import br.com.fastdevelopment.auxy.dto.TenantResponse;
+import br.com.fastdevelopment.auxy.dto.TenantUpdateRequest;
 import br.com.fastdevelopment.auxy.service.TenantService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +36,7 @@ public class TenantController {
 
     @PostMapping
     public TenantResponse create(
-        @RequestBody TenantRequest request
+        @Valid @RequestBody TenantCreateRequest request
     ) {
         return this.tenantService.create(request);
     }
@@ -42,7 +44,7 @@ public class TenantController {
     @PatchMapping("/{id}")
     public ResponseEntity<TenantResponse> update(
         @PathVariable Long id,
-        @RequestBody TenantRequest request
+        @Valid @RequestBody TenantUpdateRequest request
     ) {
         return this.tenantService.update(id, request)
                 .map(ResponseEntity::ok)
@@ -50,9 +52,15 @@ public class TenantController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(
+    public ResponseEntity<Void> delete(
         @PathVariable Long id
     ) {
-        this.tenantService.delete(id);
+        boolean deleted = tenantService.delete(id);
+
+        if (!deleted) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.noContent().build();
     }
 }

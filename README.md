@@ -101,7 +101,7 @@ Todos os dados de negócio pertencem a um Tenant, permitindo o isolamento lógic
 ---
 
 <details>
-<summary>⬜ Etapa 3 - Validação de Dados</summary>
+<summary>✅ Etapa 3 - Validação de Dados</summary>
 
 ### Objetivos
 
@@ -114,7 +114,6 @@ Todos os dados de negócio pertencem a um Tenant, permitindo o isolamento lógic
 ### Conceitos
 
 - Bean Validation
-- Mensagens de erro
 - Contratos de API
 
 </details>
@@ -181,6 +180,7 @@ Todos os dados de negócio pertencem a um Tenant, permitindo o isolamento lógic
 - Exceptions customizadas
 - Global Exception Handler
 - Padronização de respostas
+- Mensagens de erro amigáveis
 
 ### Conceitos
 

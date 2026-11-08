@@ -1,6 +1,7 @@
 package br.com.fastdevelopment.auxy.service;
 
-import br.com.fastdevelopment.auxy.dto.TenantRequest;
+import br.com.fastdevelopment.auxy.dto.TenantCreateRequest;
+import br.com.fastdevelopment.auxy.dto.TenantUpdateRequest;
 import br.com.fastdevelopment.auxy.dto.TenantResponse;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +57,7 @@ public class TenantService {
                 .findFirst();
     }
 
-    public TenantResponse create(TenantRequest tenantData) {
+    public TenantResponse create(TenantCreateRequest tenantData) {
         validateSlugUniqueness(null, tenantData.slug());
 
         Long nextId = tenants.stream()
@@ -75,7 +76,7 @@ public class TenantService {
         return tenant;
     }
 
-    public Optional<TenantResponse> update(Long id, TenantRequest tenantData) {
+    public Optional<TenantResponse> update(Long id, TenantUpdateRequest tenantData) {
         if(tenantData.slug() != null && !tenantData.slug().isBlank()) {
             validateSlugUniqueness(id, tenantData.slug());
         }
