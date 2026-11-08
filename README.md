@@ -55,26 +55,16 @@ Permitir a inicialização da aplicação e criação da estrutura base do proje
 ---
 
 <details>
-<summary>⬜ Etapa 2 - Camadas da Aplicação</summary>
+<summary>⬜ Etapa 2 - API REST de Tenant</summary>
 
 ### Objetivos
 
-- Controller
-- Service
-- DTO Response
-- DTO Request
-- Injeção de Dependência
-- IoC Container
-- Serialização JSON
+- Estruturar as camadas da aplicação
+- Implementar CRUD de Tenant
+- Expor endpoints REST
+- Criar contratos de Request e Response
 
-</details>
-
----
-
-<details>
-<summary>⬜ Etapa 3 - CRUD de Tenant</summary>
-
-### Objetivos
+### Endpoints
 
 - GET /tenants
 - GET /tenants/{id}
@@ -82,8 +72,18 @@ Permitir a inicialização da aplicação e criação da estrutura base do proje
 - PUT /tenants/{id}
 - DELETE /tenants/{id}
 
+### Estrutura
+
+- Controller
+- Service
+- DTO Response
+- DTO Request
+
 ### Conceitos
 
+- Injeção de Dependência
+- IoC Container
+- Serialização JSON
 - PathVariable
 - RequestBody
 - ResponseEntity
@@ -94,7 +94,7 @@ Permitir a inicialização da aplicação e criação da estrutura base do proje
 ---
 
 <details>
-<summary>⬜ Etapa 4 - Validação de Dados</summary>
+<summary>⬜ Etapa 3 - Validação de Dados</summary>
 
 ### Objetivos
 
@@ -115,7 +115,7 @@ Permitir a inicialização da aplicação e criação da estrutura base do proje
 ---
 
 <details>
-<summary>⬜ Etapa 5 - PostgreSQL</summary>
+<summary>⬜ Etapa 4 - PostgreSQL</summary>
 
 ### Objetivos
 
@@ -135,7 +135,7 @@ Permitir a inicialização da aplicação e criação da estrutura base do proje
 ---
 
 <details>
-<summary>⬜ Etapa 6 - JPA e Hibernate</summary>
+<summary>⬜ Etapa 5 - JPA e Hibernate</summary>
 
 ### Objetivos
 
@@ -156,7 +156,7 @@ Permitir a inicialização da aplicação e criação da estrutura base do proje
 ---
 
 <details>
-<summary>⬜ Etapa 7 - Relacionamentos</summary>
+<summary>⬜ Etapa 6 - Relacionamentos</summary>
 
 ### Objetivos
 
@@ -177,7 +177,7 @@ Permitir a inicialização da aplicação e criação da estrutura base do proje
 ---
 
 <details>
-<summary>⬜ Etapa 8 - Tratamento de Erros</summary>
+<summary>⬜ Etapa 7 - Tratamento de Erros</summary>
 
 ### Objetivos
 
@@ -195,7 +195,7 @@ Permitir a inicialização da aplicação e criação da estrutura base do proje
 ---
 
 <details>
-<summary>⬜ Etapa 9 - Testes</summary>
+<summary>⬜ Etapa 8 - Testes</summary>
 
 ### Objetivos
 
@@ -215,7 +215,7 @@ Permitir a inicialização da aplicação e criação da estrutura base do proje
 ---
 
 <details>
-<summary>⬜ Etapa 10 - Infraestrutura</summary>
+<summary>⬜ Etapa 9 - Infraestrutura</summary>
 
 ### Objetivos
 
@@ -229,7 +229,7 @@ Permitir a inicialização da aplicação e criação da estrutura base do proje
 ---
 
 <details>
-<summary>⬜ Etapa 11 - Arquitetura e Produção</summary>
+<summary>⬜ Etapa 10 - Arquitetura e Produção</summary>
 
 ### Objetivos
 
