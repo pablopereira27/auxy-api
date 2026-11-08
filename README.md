@@ -55,7 +55,7 @@ Permitir a inicialização da aplicação e criação da estrutura base do proje
 ---
 
 <details>
-<summary>⬜ Etapa 2 - API REST de Tenant</summary>
+<summary>✅ Etapa 2 - API REST de Tenant</summary>
 
 ### Objetivos
 
