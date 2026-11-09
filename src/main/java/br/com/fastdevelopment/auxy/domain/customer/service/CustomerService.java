@@ -6,9 +6,11 @@ import br.com.fastdevelopment.auxy.domain.customer.dto.CustomerUpdateRequest;
 import br.com.fastdevelopment.auxy.domain.customer.entity.Customer;
 import br.com.fastdevelopment.auxy.domain.customer.mapper.CustomerMapper;
 import br.com.fastdevelopment.auxy.domain.customer.repository.CustomerRepository;
-import br.com.fastdevelopment.auxy.infrastructure.tenant.TenantContext;
 import br.com.fastdevelopment.auxy.domain.tenant.entity.Tenant;
 import br.com.fastdevelopment.auxy.domain.tenant.repository.TenantRepository;
+import br.com.fastdevelopment.auxy.infrastructure.error.DuplicateResourceException;
+import br.com.fastdevelopment.auxy.infrastructure.error.ResourceNotFoundException;
+import br.com.fastdevelopment.auxy.infrastructure.tenant.TenantContext;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,13 +55,13 @@ public class CustomerService {
         Long tenantId = TenantContext.requireTenantId();
 
         Tenant tenant = tenantRepository.findById(tenantId)
-                .orElseThrow(() -> new RuntimeException("Tenant not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Tenant with id " + tenantId + " was not found"));
 
         if (customerRepository.existsByEmailAndTenantId(
                 request.email(),
                 tenantId
         )) {
-            throw new RuntimeException("E-mail already exists");
+            throw new DuplicateResourceException("E-mail already exists");
         }
 
         Customer customer = customerMapper.toEntity(request);
@@ -77,7 +79,7 @@ public class CustomerService {
         Long tenantId = TenantContext.requireTenantId();
 
         tenantRepository.findById(tenantId)
-                .orElseThrow(() -> new RuntimeException("Tenant not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Tenant with id " + tenantId + " was not found"));
 
         Optional<Customer> customerOptional = customerRepository.findByIdAndTenantId(id, tenantId);
 
@@ -93,7 +95,7 @@ public class CustomerService {
                 : request.email();
 
         if (customerRepository.existsByEmailAndTenantIdAndIdNot(email, tenantId, id)) {
-            throw new RuntimeException("E-mail already exists");
+            throw new DuplicateResourceException("E-mail already exists");
         }
 
         customerMapper.updateEntity(request, customer);

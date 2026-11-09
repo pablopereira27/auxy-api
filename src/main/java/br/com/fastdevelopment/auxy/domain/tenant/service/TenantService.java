@@ -6,6 +6,7 @@ import br.com.fastdevelopment.auxy.domain.tenant.dto.TenantUpdateRequest;
 import br.com.fastdevelopment.auxy.domain.tenant.entity.Tenant;
 import br.com.fastdevelopment.auxy.domain.tenant.mapper.TenantMapper;
 import br.com.fastdevelopment.auxy.domain.tenant.repository.TenantRepository;
+import br.com.fastdevelopment.auxy.infrastructure.error.DuplicateResourceException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,7 +42,7 @@ public class TenantService {
         String normalizedSlug = tenantMapper.normalizeSlug(request.slug());
 
         if (tenantRepository.existsBySlug(normalizedSlug)) {
-            throw new RuntimeException("Slug already exists");
+            throw new DuplicateResourceException("Slug already exists");
         }
 
         Tenant tenant = tenantMapper.toEntity(request);
@@ -65,7 +66,7 @@ public class TenantService {
                 : tenantMapper.normalizeSlug(request.slug());
 
         if (tenantRepository.existsBySlugAndIdNot(slug, id)) {
-            throw new RuntimeException("Slug already exists");
+            throw new DuplicateResourceException("Slug already exists");
         }
 
         tenantMapper.updateEntity(request, tenant);

@@ -1,8 +1,9 @@
 package br.com.fastdevelopment.auxy.infrastructure.tenant;
 
+import br.com.fastdevelopment.auxy.infrastructure.error.InvalidTenantException;
+import br.com.fastdevelopment.auxy.infrastructure.error.MissingTenantException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 public class TenantContextInterceptor implements HandlerInterceptor {
@@ -18,12 +19,9 @@ public class TenantContextInterceptor implements HandlerInterceptor {
         String tenantHeader = request.getHeader(TENANT_HEADER);
 
         if (tenantHeader == null || tenantHeader.isBlank()) {
-            response.sendError(
-                HttpStatus.BAD_REQUEST.value(),
-                "Missing X-Tenant-Id header"
+            throw new MissingTenantException(
+                "X-Tenant-Id header is required"
             );
-
-            return false;
         }
 
         try {
@@ -38,12 +36,9 @@ public class TenantContextInterceptor implements HandlerInterceptor {
             return true;
 
         } catch (NumberFormatException exception) {
-            response.sendError(
-                HttpStatus.BAD_REQUEST.value(),
-                "Invalid X-Tenant-Id header"
+            throw new InvalidTenantException(
+                "X-Tenant-Id header must contain a positive number"
             );
-
-            return false;
         }
     }
 

@@ -343,7 +343,7 @@ sejam úteis para demonstrar novas tecnologias ou conceitos.
 ---
 
 <details>
-<summary>⬜ Etapa 6 - Tratamento de Erros</summary>
+<summary>✅ Etapa 6 - Tratamento de Erros</summary>
 
 ### Objetivos
 
@@ -355,9 +355,12 @@ sejam úteis para demonstrar novas tecnologias ou conceitos.
 - Tratar tenant ausente ou inválido
 - Tratar conflitos de unicidade
 - Tratar headers malformados
+- Tratar corpos JSON malformados
+- Tratar parâmetros de rota com formato inválido
+- Tratar violações de constraints do banco de dados
 - Tratar erros inesperados sem expor detalhes internos
 - Definir códigos HTTP coerentes para cada tipo de erro
-- Registrar erros relevantes em logs estruturados
+- Registrar erros inesperados com stack trace
 
 ### Conceitos
 
@@ -368,7 +371,9 @@ sejam úteis para demonstrar novas tecnologias ou conceitos.
 - Status HTTP
 - Contrato de erro
 - Validação com Bean Validation
-- Logs estruturados
+- Logging com SLF4J e Lombok `@Slf4j`
+- Tratamento de erros de parsing e conversão
+- Tratamento de erros de persistência
 
 </details>
 
