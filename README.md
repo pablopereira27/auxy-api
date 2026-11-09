@@ -121,18 +121,23 @@ Todos os dados de negócio pertencem a um Tenant, permitindo o isolamento lógic
 ---
 
 <details>
-<summary>⬜ Etapa 4 - Persistência com PostgreSQL e JPA</summary>
+<summary>✅ Etapa 4 - Persistência com PostgreSQL e JPA</summary>
 
 ### Objetivos
 
 - Configurar PostgreSQL
 - Configurar DataSource
-- Configurar Profiles
+- Configurar profiles de ambiente
+- Configurar credenciais por variável de ambiente
 - Integrar aplicação com banco de dados
-- Criar entidade Tenant
-- Criar Repository
-- Implementar persistência de Tenant
+- Criar entidade `Tenant`
+- Criar `TenantRepository`
+- Implementar persistência de `Tenant`
 - Substituir armazenamento em memória por persistência real
+- Manter entidades separadas dos DTOs
+- Mapear entidades e DTOs com MapStruct
+- Normalizar o slug antes da persistência
+- Garantir unicidade do slug no banco de dados
 
 ### Conceitos
 
@@ -146,6 +151,12 @@ Todos os dados de negócio pertencem a um Tenant, permitindo o isolamento lógic
 - Repository
 - JpaRepository
 - Ciclo de vida das entidades
+- Entity versus DTO
+- MapStruct
+- Lombok
+- Query derivation
+- Restrições de unicidade
+- Geração automática de schema
 
 </details>
 

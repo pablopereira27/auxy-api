@@ -1,121 +1,86 @@
 package br.com.fastdevelopment.auxy.service;
 
 import br.com.fastdevelopment.auxy.dto.TenantCreateRequest;
-import br.com.fastdevelopment.auxy.dto.TenantUpdateRequest;
 import br.com.fastdevelopment.auxy.dto.TenantResponse;
+import br.com.fastdevelopment.auxy.dto.TenantUpdateRequest;
+import br.com.fastdevelopment.auxy.entity.Tenant;
+import br.com.fastdevelopment.auxy.mapper.TenantMapper;
+import br.com.fastdevelopment.auxy.repository.TenantRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class TenantService {
 
-    private final List<TenantResponse> tenants = new ArrayList<>();
+    private final TenantRepository tenantRepository;
+    private final TenantMapper tenantMapper;
 
-    TenantService() {
-        tenants.add(new TenantResponse(1L,"Fast Development","fast-development"));
-        tenants.add(new TenantResponse(2L,"Empresa 1","empresa-1"));
-    }
-
-    private void validateSlugUniqueness(
-            Long tenantId,
-            String slug
+    public TenantService(
+            TenantRepository tenantRepository,
+            TenantMapper tenantMapper
     ) {
-        boolean exists = tenants.stream()
-                .anyMatch(t -> t.slug().equals(slug)
-                    && !t.id().equals(tenantId)
-                );
-
-        if (exists) {
-            throw new RuntimeException("Slug already exists");
-        }
-    }
-
-    private Optional<Integer> findTenantIndexById(
-            Long id
-    ) {
-        for (int i = 0; i < tenants.size(); i++) {
-
-            if (tenants.get(i).id().equals(id)) {
-                return Optional.of(i);
-            }
-
-        }
-
-        return Optional.empty();
+        this.tenantRepository = tenantRepository;
+        this.tenantMapper = tenantMapper;
     }
 
     public List<TenantResponse> list() {
-        return tenants;
+        return tenantRepository.findAll()
+                .stream()
+                .map(tenantMapper::toResponse)
+                .toList();
     }
 
     public Optional<TenantResponse> getById(Long id) {
-        return tenants.stream()
-                .filter(t -> t.id().equals(id))
-                .findFirst();
+        return tenantRepository.findById(id)
+                .map(tenantMapper::toResponse);
     }
 
-    public TenantResponse create(TenantCreateRequest tenantData) {
-        validateSlugUniqueness(null, tenantData.slug());
+    public TenantResponse create(TenantCreateRequest request) {
+        String normalizedSlug = tenantMapper.normalizeSlug(request.slug());
 
-        Long nextId = tenants.stream()
-                .map(TenantResponse::id)
-                .max(Long::compareTo)
-                .orElse(0L) + 1;
-
-        TenantResponse tenant = new TenantResponse(
-            nextId,
-            tenantData.name(),
-            tenantData.slug()
-        );
-
-        tenants.add(tenant);
-
-        return tenant;
-    }
-
-    public Optional<TenantResponse> update(Long id, TenantUpdateRequest tenantData) {
-        if(tenantData.slug() != null && !tenantData.slug().isBlank()) {
-            validateSlugUniqueness(id, tenantData.slug());
+        if (tenantRepository.existsBySlug(normalizedSlug)) {
+            throw new RuntimeException("Slug already exists");
         }
 
-        Optional<Integer> tenantIndex = findTenantIndexById(id);
+        Tenant tenant = tenantMapper.toEntity(request);
+        Tenant savedTenant = tenantRepository.save(tenant);
 
-        if (tenantIndex.isEmpty()) {
+        return tenantMapper.toResponse(savedTenant);
+    }
+
+    public Optional<TenantResponse> update(Long id, TenantUpdateRequest request) {
+        Optional<Tenant> tenantOptional = tenantRepository.findById(id);
+
+        if (tenantOptional.isEmpty()) {
             return Optional.empty();
         }
 
-        TenantResponse current = tenants.get(tenantIndex.get());
+        Tenant tenant = tenantOptional.get();
 
-        String name = tenantData.name() == null || tenantData.name().isBlank()
-                ? current.name()
-                : tenantData.name();
+        String slug = request.slug() == null
+                || request.slug().isBlank()
+                ? tenant.getSlug()
+                : tenantMapper.normalizeSlug(request.slug());
 
-        String slug = tenantData.slug() == null || tenantData.slug().isBlank()
-                ? current.slug()
-                : tenantData.slug();
+        if (tenantRepository.existsBySlugAndIdNot(slug, id)) {
+            throw new RuntimeException("Slug already exists");
+        }
 
-        TenantResponse updated = new TenantResponse(
-                current.id(),
-                name,
-                slug
-        );
+        tenantMapper.updateEntity(request, tenant);
 
-        tenants.set(tenantIndex.get(), updated);
+        Tenant updatedTenant = tenantRepository.save(tenant);
 
-        return Optional.of(updated);
+        return Optional.of(tenantMapper.toResponse(updatedTenant));
     }
 
     public boolean delete(Long id) {
-        Optional<Integer> tenantIndex = findTenantIndexById(id);
-
-        if (tenantIndex.isEmpty()) {
+        if (!tenantRepository.existsById(id)) {
             return false;
         }
 
-        tenants.remove(tenantIndex.get().intValue());
+        tenantRepository.deleteById(id);
         return true;
     }
 }
