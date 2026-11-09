@@ -9,11 +9,11 @@ O objetivo é exercitar conceitos modernos do ecossistema Java, arquitetura back
 - [Domínio do projeto](#domínio-do-projeto)
 - [Estrutura de módulos](#estrutura-de-módulos)
 - [Etapas do projeto](#etapas-do-projeto)
-  - Etapa 1 — Estrutura inicial
+  - Etapa 1 — Estrutura Inicial do Projeto
   - Etapa 2 — API REST de Tenant
-  - Etapa 3 — Validação
-  - Etapa 4 — Persistência
-  - Etapa 5 — Relacionamentos
+  - Etapa 3 — Validação de Dados
+  - Etapa 4 — Persistência com PostgreSQL e JPA
+  - Etapa 5 — Relacionamentos e contexto de Tenant
   - Etapa 6 — Tratamento de erros
   - Etapa 7 — Testes
   - Etapa 8 — Infraestrutura
@@ -384,16 +384,40 @@ sejam úteis para demonstrar novas tecnologias ou conceitos.
 
 ### Objetivos
 
+- Testar regras de negócio isoladamente
+- Testar conversão entre DTOs e entidades
+- Testar repositories e consultas derivadas
+- Testar controllers com requisições HTTP
+- Testar validação dos DTOs
+- Testar o tratamento global de erros
+- Testar o isolamento entre tenants
+- Testar o CRUD de Tenant e Customer
+- Testar constraints e unicidade por tenant
+- Testar o contexto de tenant por requisição
+- Testar a integração com PostgreSQL
+
+### Tipos de teste
+
 - Testes unitários
 - Testes de integração
-- Testes de Controller
-- Testes de Service
+- Testes de controller
+- Testes de service
+- Testes de repository
+- Testes de contexto da aplicação
 
 ### Conceitos
 
-- JUnit
+- JUnit 5
 - Mockito
-- Spring Boot Test
+- AssertJ
+- MockMvc
+- `@WebMvcTest`
+- `@DataJpaTest`
+- `@SpringBootTest`
+- Testcontainers
+- Test profiles
+- Fixtures e test data builders
+- Testes de isolamento multi-tenant
 
 </details>
 
