@@ -1,9 +1,9 @@
-package br.com.fastdevelopment.auxy.controller;
+package br.com.fastdevelopment.auxy.domain.tenant.controller;
 
-import br.com.fastdevelopment.auxy.dto.TenantCreateRequest;
-import br.com.fastdevelopment.auxy.dto.TenantResponse;
-import br.com.fastdevelopment.auxy.dto.TenantUpdateRequest;
-import br.com.fastdevelopment.auxy.service.TenantService;
+import br.com.fastdevelopment.auxy.domain.tenant.dto.TenantCreateRequest;
+import br.com.fastdevelopment.auxy.domain.tenant.dto.TenantResponse;
+import br.com.fastdevelopment.auxy.domain.tenant.dto.TenantUpdateRequest;
+import br.com.fastdevelopment.auxy.domain.tenant.service.TenantService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

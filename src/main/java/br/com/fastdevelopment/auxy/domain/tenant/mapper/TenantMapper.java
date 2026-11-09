@@ -1,9 +1,9 @@
-package br.com.fastdevelopment.auxy.mapper;
+package br.com.fastdevelopment.auxy.domain.tenant.mapper;
 
-import br.com.fastdevelopment.auxy.dto.TenantCreateRequest;
-import br.com.fastdevelopment.auxy.dto.TenantResponse;
-import br.com.fastdevelopment.auxy.dto.TenantUpdateRequest;
-import br.com.fastdevelopment.auxy.entity.Tenant;
+import br.com.fastdevelopment.auxy.domain.tenant.dto.TenantCreateRequest;
+import br.com.fastdevelopment.auxy.domain.tenant.dto.TenantResponse;
+import br.com.fastdevelopment.auxy.domain.tenant.dto.TenantUpdateRequest;
+import br.com.fastdevelopment.auxy.domain.tenant.entity.Tenant;
 import org.mapstruct.*;
 
 import java.util.Locale;

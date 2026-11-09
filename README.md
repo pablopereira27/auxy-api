@@ -51,44 +51,28 @@ flowchart TD
 
 ## Estrutura de módulos
 
-A aplicação é organizada por módulos de negócio, seguindo uma abordagem parcial inspirada em Domain-Driven Design (DDD).
+A aplicação é organizada por módulos de negócio dentro do package `domain`, seguindo uma abordagem parcial inspirada em Domain-Driven Design (DDD).
 
 ```text
 br.com.fastdevelopment.auxy/
-├── tenant/
-│   ├── controller/
-│   ├── service/
-│   ├── repository/
-│   ├── entity/
-│   └── dto/
-├── customer/
-│   ├── controller/
-│   ├── service/
-│   ├── repository/
-│   ├── entity/
-│   └── dto/
-├── catalog/
-│   ├── controller/
-│   ├── service/
-│   ├── repository/
-│   ├── entity/
-│   └── dto/
-├── quotation/
-│   ├── controller/
-│   ├── service/
-│   ├── repository/
-│   ├── entity/
-│   └── dto/
-└── billing/
-    ├── controller/
-    ├── service/
-    ├── repository/
-    ├── entity/
-    └── dto/
+└── domain/
+    ├── tenant/
+    │   ├── controller/
+    │   ├── service/
+    │   ├── repository/
+    │   ├── entity/
+    │   └── dto/
+    └── customer/
+        ├── controller/
+        ├── service/
+        ├── repository/
+        ├── entity/
+        └── dto/
 ```
 
-Atualmente, o módulo `tenant` está implementado. Os demais módulos fazem parte
-do planejamento de evolução da aplicação.
+Neste momento, os módulos `tenant` e `customer` fazem parte do escopo de
+implementação. Os módulos de catálogo, orçamentos e faturamento permanecem como
+possíveis evoluções futuras.
 
 ```mermaid
 erDiagram
@@ -296,31 +280,44 @@ erDiagram
 ---
 
 <details>
-<summary>⬜ Etapa 5 - Relacionamentos</summary>
+<summary>✅ Etapa 5 - Relacionamentos e contexto de Tenant</summary>
 
 ### Objetivos
 
-- Criar relacionamento entre Tenant e Customer
-- Aplicar validações de dados de Customer, incluindo `@Email`
-- Criar catálogo de Services por Tenant
-- Criar Quotation pertencente a um Customer
-- Criar QuotationItem para representar os serviços do orçamento
-- Preservar preço e descrição do serviço no momento da criação do orçamento
-- Gerar Invoice a partir de uma Quotation aprovada
-- Registrar Payment relacionado a uma Invoice
-- Garantir isolamento dos dados por Tenant
+- Reorganizar o módulo `Tenant` dentro de `domain.tenant`
+- Criar o módulo `Customer` dentro de `domain.customer`
+- Criar a entidade `Customer`
+- Criar o relacionamento `Tenant` → `Customer`
+- Implementar CRUD de `Customer`
+- Buscar customers pelo tenant atual sem expor `tenantId` na URL
+- Usar o header `X-Tenant-Id` para identificar o tenant atual durante o desenvolvimento
+- Criar um contexto de tenant por requisição
+- Limpar o contexto ao final de cada requisição
+- Garantir que as consultas e operações de `Customer` respeitem o tenant atual
+- Garantir unicidade de e-mail por tenant
 
 ### Conceitos
 
 - `@OneToMany`
 - `@ManyToOne`
-- Entidades associativas
-- Relacionamento entre `Quotation` e `QuotationItem`
-- Composição de agregados
-- Cascades
+- Contexto de Tenant
+- `HandlerInterceptor`
+- Header HTTP para identificação do tenant
+- `ThreadLocal` e escopo da requisição
 - Fetch Types
 - Integridade referencial
 - Isolamento multi-tenant
+
+### Conceitos para aprofundamento futuro
+
+- Cascades
+- Validação centralizada da existência do tenant
+- Autenticação e autorização do tenant
+- Substituição do header por um tenant obtido a partir do usuário autenticado
+
+Os módulos `Service`, `Quotation`, `QuotationItem`, `Invoice` e `Payment` não
+fazem parte desta etapa. Eles poderão ser implementados posteriormente caso
+sejam úteis para demonstrar novas tecnologias ou conceitos.
 
 </details>
 

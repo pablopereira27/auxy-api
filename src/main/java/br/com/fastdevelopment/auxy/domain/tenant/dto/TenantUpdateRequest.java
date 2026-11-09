@@ -1,4 +1,4 @@
-package br.com.fastdevelopment.auxy.dto;
+package br.com.fastdevelopment.auxy.domain.tenant.dto;
 
 import jakarta.validation.constraints.Size;
 

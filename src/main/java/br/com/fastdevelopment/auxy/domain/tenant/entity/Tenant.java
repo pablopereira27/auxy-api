@@ -1,10 +1,14 @@
-package br.com.fastdevelopment.auxy.entity;
+package br.com.fastdevelopment.auxy.domain.tenant.entity;
 
+import br.com.fastdevelopment.auxy.domain.customer.entity.Customer;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(
@@ -35,4 +39,7 @@ public class Tenant {
         this.name = name;
         this.slug = slug;
     }
+
+    @OneToMany(mappedBy = "tenant")
+    private List<Customer> customers = new ArrayList<>();
 }

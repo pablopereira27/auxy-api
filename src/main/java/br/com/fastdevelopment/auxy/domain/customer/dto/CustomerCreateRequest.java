@@ -1,15 +1,17 @@
-package br.com.fastdevelopment.auxy.dto;
+package br.com.fastdevelopment.auxy.domain.customer.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public record TenantCreateRequest(
+public record CustomerCreateRequest(
         @NotBlank()
         @Size(max = 100)
         String name,
 
         @NotBlank()
         @Size(max = 100)
-        String slug
+        @Email()
+        String email
 ) {
 }
