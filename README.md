@@ -328,15 +328,28 @@ sejam úteis para demonstrar novas tecnologias ou conceitos.
 
 ### Objetivos
 
-- Exceptions customizadas
-- Global Exception Handler
-- Padronização de respostas
-- Mensagens de erro amigáveis
+- Criar exceptions customizadas para regras de negócio
+- Criar um Global Exception Handler
+- Padronizar respostas de erro da API
+- Tratar erros de validação dos requests
+- Tratar recursos não encontrados
+- Tratar tenant ausente ou inválido
+- Tratar conflitos de unicidade
+- Tratar headers malformados
+- Tratar erros inesperados sem expor detalhes internos
+- Definir códigos HTTP coerentes para cada tipo de erro
+- Registrar erros relevantes em logs estruturados
 
 ### Conceitos
 
-- @RestControllerAdvice
-- @ExceptionHandler
+- `@RestControllerAdvice`
+- `@ExceptionHandler`
+- Exceptions de domínio e aplicação
+- `ProblemDetail`
+- Status HTTP
+- Contrato de erro
+- Validação com Bean Validation
+- Logs estruturados
 
 </details>
 
@@ -381,9 +394,7 @@ sejam úteis para demonstrar novas tecnologias ou conceitos.
 
 ### Objetivos
 
-- Multi-tenancy
 - Observabilidade
-- Logs estruturados
 - Métricas
 - Health Checks
 
