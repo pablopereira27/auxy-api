@@ -26,20 +26,9 @@ A aplicação está sendo modelada como uma plataforma multi-tenant e utiliza um
 - `Invoice`: cobrança gerada a partir de um orçamento aprovado;
 - `Payment`: pagamento total ou parcial de uma fatura.
 
-Fluxo principal:
+Todos os dados de negócio são associados a um Tenant, direta ou indiretamente, permitindo o isolamento lógico entre organizações.
 
-```text
-Tenant
-├── Customer
-│   └── Quotation
-│       ├── QuotationItem
-│       │   └── Service
-│       └── Invoice
-│           └── Payment
-└── Service
-```
-
-Todos os dados de negócio pertencem a um Tenant, permitindo o isolamento lógico entre organizações.
+O fluxo de negócio é representado abaixo de forma conceitual. Em seguida, o diagrama entidade-relacionamento detalha as estruturas persistidas.
 
 ```mermaid
 flowchart TD
@@ -59,6 +48,47 @@ flowchart TD
     QUOTATION -->|aprovado gera| INVOICE
     INVOICE -->|recebe| PAYMENT
 ```
+
+## Estrutura de módulos
+
+A aplicação é organizada por módulos de negócio, seguindo uma abordagem parcial inspirada em Domain-Driven Design (DDD).
+
+```text
+br.com.fastdevelopment.auxy/
+├── tenant/
+│   ├── controller/
+│   ├── service/
+│   ├── repository/
+│   ├── entity/
+│   └── dto/
+├── customer/
+│   ├── controller/
+│   ├── service/
+│   ├── repository/
+│   ├── entity/
+│   └── dto/
+├── catalog/
+│   ├── controller/
+│   ├── service/
+│   ├── repository/
+│   ├── entity/
+│   └── dto/
+├── quotation/
+│   ├── controller/
+│   ├── service/
+│   ├── repository/
+│   ├── entity/
+│   └── dto/
+└── billing/
+    ├── controller/
+    ├── service/
+    ├── repository/
+    ├── entity/
+    └── dto/
+```
+
+Atualmente, o módulo `tenant` está implementado. Os demais módulos fazem parte
+do planejamento de evolução da aplicação.
 
 ```mermaid
 erDiagram
@@ -130,7 +160,7 @@ erDiagram
         string method
         datetime paid_at
     }
- ```
+```
    
 ---
 
@@ -160,7 +190,7 @@ erDiagram
 - Publicação no GitHub
 - Auto Configuration
 - DataSource Auto Configuration
-- 
+
 </details>
 
 ---
@@ -180,7 +210,7 @@ erDiagram
 - GET /tenants
 - GET /tenants/{id}
 - POST /tenants
-- PUT /tenants/{id}
+- PATCH /tenants/{id}
 - DELETE /tenants/{id}
 
 ### Estrutura
@@ -211,7 +241,6 @@ erDiagram
 
 - @NotNull
 - @NotBlank
-- @Email
 - @Size
 - Validação automática do Spring
 
@@ -271,17 +300,27 @@ erDiagram
 
 ### Objetivos
 
-- Tenant → Cliente
-- Cliente → Orçamento
-- Orçamento → Serviço
-- Serviço → Fatura
+- Criar relacionamento entre Tenant e Customer
+- Aplicar validações de dados de Customer, incluindo `@Email`
+- Criar catálogo de Services por Tenant
+- Criar Quotation pertencente a um Customer
+- Criar QuotationItem para representar os serviços do orçamento
+- Preservar preço e descrição do serviço no momento da criação do orçamento
+- Gerar Invoice a partir de uma Quotation aprovada
+- Registrar Payment relacionado a uma Invoice
+- Garantir isolamento dos dados por Tenant
 
 ### Conceitos
 
-- @OneToMany
-- @ManyToOne
+- `@OneToMany`
+- `@ManyToOne`
+- Entidades associativas
+- Relacionamento entre `Quotation` e `QuotationItem`
+- Composição de agregados
 - Cascades
 - Fetch Types
+- Integridade referencial
+- Isolamento multi-tenant
 
 </details>
 
