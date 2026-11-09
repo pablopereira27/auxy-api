@@ -16,18 +16,122 @@ O objetivo é exercitar conceitos modernos do ecossistema Java, arquitetura back
 
 ## Domínio do projeto
 
-A aplicação está sendo modelada como uma plataforma multi-tenant.
+A aplicação está sendo modelada como uma plataforma multi-tenant e utiliza uma organização modular baseada nos principais conceitos do domínio:
+
+- `Tenant`: empresa que utiliza a plataforma;
+- `Customer`: cliente pertencente a um tenant;
+- `Service`: serviço oferecido por um tenant;
+- `Quotation`: orçamento criado para um cliente;
+- `QuotationItem`: serviço incluído em um orçamento, com preço e quantidade;
+- `Invoice`: cobrança gerada a partir de um orçamento aprovado;
+- `Payment`: pagamento total ou parcial de uma fatura.
+
+Fluxo principal:
 
 ```text
 Tenant
- └── Cliente
-      └── Orçamento
-           └── Serviço
-                └── Fatura
+├── Customer
+│   └── Quotation
+│       ├── QuotationItem
+│       │   └── Service
+│       └── Invoice
+│           └── Payment
+└── Service
 ```
 
 Todos os dados de negócio pertencem a um Tenant, permitindo o isolamento lógico entre organizações.
 
+```mermaid
+flowchart TD
+    TENANT[Tenant<br/>Empresa usuária]
+    CUSTOMER[Customer<br/>Cliente da empresa]
+    SERVICE[Service<br/>Serviço oferecido]
+    QUOTATION[Quotation<br/>Orçamento]
+    ITEM[QuotationItem<br/>Item do orçamento]
+    INVOICE[Invoice<br/>Fatura]
+    PAYMENT[Payment<br/>Pagamento]
+
+    TENANT -->|possui| CUSTOMER
+    TENANT -->|oferece| SERVICE
+    CUSTOMER -->|recebe| QUOTATION
+    QUOTATION -->|contém| ITEM
+    ITEM -->|referencia| SERVICE
+    QUOTATION -->|aprovado gera| INVOICE
+    INVOICE -->|recebe| PAYMENT
+```
+
+```mermaid
+erDiagram
+    TENANT ||--o{ CUSTOMER : owns
+    TENANT ||--o{ SERVICE : offers
+    CUSTOMER ||--o{ QUOTATION : receives
+    QUOTATION ||--|{ QUOTATION_ITEM : contains
+    SERVICE ||--o{ QUOTATION_ITEM : references
+    QUOTATION ||--o| INVOICE : generates
+    INVOICE ||--o{ PAYMENT : receives
+
+    TENANT {
+        bigint id PK
+        string name
+        string slug UK
+    }
+
+    CUSTOMER {
+        bigint id PK
+        bigint tenant_id FK
+        string name
+        string document
+        string email
+    }
+
+    SERVICE {
+        bigint id PK
+        bigint tenant_id FK
+        string name
+        string description
+        decimal default_price
+        boolean active
+    }
+
+    QUOTATION {
+        bigint id PK
+        bigint tenant_id FK
+        bigint customer_id FK
+        string status
+        decimal total_amount
+        datetime created_at
+        datetime expires_at
+    }
+
+    QUOTATION_ITEM {
+        bigint id PK
+        bigint quotation_id FK
+        bigint service_id FK
+        string description
+        decimal quantity
+        decimal unit_price
+        decimal total_amount
+    }
+
+    INVOICE {
+        bigint id PK
+        bigint tenant_id FK
+        bigint quotation_id FK
+        string status
+        decimal total_amount
+        date due_date
+        datetime issued_at
+    }
+
+    PAYMENT {
+        bigint id PK
+        bigint invoice_id FK
+        decimal amount
+        string method
+        datetime paid_at
+    }
+ ```
+   
 ---
 
 <details>
