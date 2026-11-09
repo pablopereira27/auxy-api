@@ -4,6 +4,21 @@ Projeto criado para estudo e prática de desenvolvimento backend utilizando Java
 
 O objetivo é exercitar conceitos modernos do ecossistema Java, arquitetura backend, APIs REST, persistência de dados e práticas comuns encontradas em aplicações corporativas.
 
+## Índice
+- [Tecnologias](#tecnologias)
+- [Domínio do projeto](#domínio-do-projeto)
+- [Estrutura de módulos](#estrutura-de-módulos)
+- [Etapas do projeto](#etapas-do-projeto)
+  - Etapa 1 — Estrutura inicial
+  - Etapa 2 — API REST de Tenant
+  - Etapa 3 — Validação
+  - Etapa 4 — Persistência
+  - Etapa 5 — Relacionamentos
+  - Etapa 6 — Tratamento de erros
+  - Etapa 7 — Testes
+  - Etapa 8 — Infraestrutura
+  - Etapa 9 — Arquitetura e produção
+
 ## Tecnologias
 
 - Java 21
@@ -73,6 +88,9 @@ br.com.fastdevelopment.auxy/
 Neste momento, os módulos `tenant` e `customer` fazem parte do escopo de
 implementação. Os módulos de catálogo, orçamentos e faturamento permanecem como
 possíveis evoluções futuras.
+
+<details>
+<summary>Ver diagrama entidade-relacionamento completo</summary>
 
 ```mermaid
 erDiagram
@@ -145,8 +163,9 @@ erDiagram
         datetime paid_at
     }
 ```
-   
----
+</details>
+
+## Etapas do Projeto
 
 <details>
 <summary>✅ Etapa 1 - Estrutura Inicial do Projeto</summary>
